@@ -7,7 +7,7 @@
   ],
   "css": [],
   "image": "Resources/PluginLogo.png",
-  "description": "please edit description here",
+  "description": "该插件可以传入值，并在页面加载时生成传入值对应的页面水印",
   "name": "WaterMark",
   "pluginType": "command",
   "guid": "c68d8d85-4ce9-4c00-9a34-ee474de51ff0",
