@@ -49,11 +49,11 @@
                 maskElement.scrollHeight,
                 maskElement.clientHeight
             );
-            defaultSettings.watermark_cols = Math.floor((page_width - 224) / (224 + defaultSettings.watermark_x_space)) + 1;
-            defaultSettings.watermark_x_space = (page_width - defaultSettings.watermark_x - 224 * defaultSettings.watermark_cols) / (defaultSettings.watermark_cols - 1);
+            defaultSettings.watermark_cols = Math.floor(page_width / (224 + defaultSettings.watermark_x_space));
+            defaultSettings.watermark_x_space = (page_width - 224 * defaultSettings.watermark_cols) / (defaultSettings.watermark_cols - 1) + 15;
 
             defaultSettings.watermark_rows = Math.floor(
-                (page_height) /
+                page_height /
                 (defaultSettings.watermark_y_space + defaultSettings.watermark_height)
             );
             defaultSettings.watermark_y_space = (page_height - 50 - defaultSettings.watermark_height * defaultSettings.watermark_rows) / (defaultSettings.watermark_rows - 1);
