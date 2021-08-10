@@ -1,0 +1,16 @@
+﻿{
+  "assembly": [
+    "WaterMark.dll"
+  ],
+  "javascript": [
+    "Resources/WaterMark.js"
+  ],
+  "css": [],
+  "image": "Resources/PluginLogo.png",
+  "description": "please edit description here",
+  "name": "WaterMark",
+  "pluginType": "command",
+  "guid": "c68d8d85-4ce9-4c00-9a34-ee474de51ff0",
+  "version": "1.0.0.0",
+  "dependenceVersion": "6.0.102.0"
+}
