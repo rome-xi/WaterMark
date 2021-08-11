@@ -5,7 +5,6 @@
     }
 
     WaterMark.prototype.execute = function () {
-        // Get settings
         var commandSettings = this.CommandParam;
         var waterMarkText = this.evaluateFormula(commandSettings.WaterMarkText);
         function watermark(settings) {
@@ -13,7 +12,7 @@
             var defaultSettings = {
                 watermarl_element: "body",
                 watermark_txt: "",
-                watermark_x: 0, //水印起始位置x轴坐标
+                watermark_x: 20, //水印起始位置x轴坐标
                 watermark_y: 20, //水印起始位置Y轴坐标
                 watermark_rows: 2000, //水印行数
                 watermark_cols: 2000, //水印列数
@@ -26,7 +25,6 @@
                 watermark_height: 80, //水印长度
                 watermark_angle: 15, //水印倾斜度数
             };
-            //采用配置项替换默认值，作用类似jquery.extend
             if (arguments.length === 1 && typeof arguments[0] === "object") {
                 var src = arguments[0] || {};
                 for (key in src) {
@@ -50,7 +48,7 @@
                 maskElement.clientHeight
             );
             defaultSettings.watermark_cols = Math.floor(page_width / (224 + defaultSettings.watermark_x_space));
-            defaultSettings.watermark_x_space = (page_width - 224 * defaultSettings.watermark_cols) / (defaultSettings.watermark_cols - 1) + 15;
+            defaultSettings.watermark_x_space = (page_width - 224 * defaultSettings.watermark_cols) / (defaultSettings.watermark_cols - 1)  + 10;
 
             defaultSettings.watermark_rows = Math.floor(
                 page_height /
@@ -73,9 +71,7 @@
                     var mask_div = document.createElement("div");
                     mask_div.id = "mask_div" + i + j;
                     mask_div.className = "mask_div";
-                    //mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
                     mask_div.innerHTML = defaultSettings.watermark_txt;
-                    //设置水印div倾斜显示
                     mask_div.style.webkitTransform =
                         "rotate(-" + defaultSettings.watermark_angle + "deg)";
                     mask_div.style.MozTransform =
@@ -92,8 +88,7 @@
                     mask_div.style.top = y + "px";
                     mask_div.style.overflow = "hidden";
                     mask_div.style.zIndex = "9999";
-                    mask_div.style.pointerEvents = "none"; //pointer-events:none  让水印不遮挡页面的点击事件 //兼容IE9以下的透明度设置
-                    //mask_div.style.border="solid #eee 1px";
+                    mask_div.style.pointerEvents = "none";
                     mask_div.style.filter = "alpha(opacity=50)";
                     mask_div.style.opacity = defaultSettings.watermark_alpha;
                     mask_div.style.fontSize = defaultSettings.watermark_fontsize;
@@ -109,13 +104,31 @@
             maskElement.appendChild(oTemp);
         }
         watermark({
-            watermarl_element: "pagesContainer",     //水印元素的id
-            watermark_txt: waterMarkText,    //水印内容
+            watermarl_element: "pagesContainer",
+            watermark_txt: waterMarkText,
         });
         $("pagesContainer").css("overflow", "auto");
-    };
 
-    
+        $(window).resize(function () {
+            $("div").remove(".mask_div");
+            watermark({
+                watermarl_element: "pagesContainer",
+                watermark_txt: waterMarkText,
+            });
+            $("pagesContainer").css("overflow", "auto");
+        })
+
+        var page = Forguncy.Page;
+
+        page.bind("pageDefaultDataLoaded", function () {
+            $("div").remove(".mask_div");
+            watermark({
+                watermarl_element: "pagesContainer",
+                watermark_txt: waterMarkText,
+            });
+            $("pagesContainer").css("overflow", "auto");
+        })
+    };
 
 
     return WaterMark;
